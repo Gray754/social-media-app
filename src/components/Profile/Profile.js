@@ -65,7 +65,7 @@ class Profile extends Component {
             src={profilePic}
             thumbnail
             width='50%'
-            // style={{ position: 'absolute', top: '5em' }}
+            style={{ marginTop: '-5em' }}
           />
         </div>
         <Row noGutter='true'>
@@ -77,7 +77,7 @@ class Profile extends Component {
               margintop: '10em'
             }}
           />
-          <Col style={{}}>
+          <Col style={{ textAlign: 'center' }}>
             <h3>
               {firstname} {lastname}
             </h3>

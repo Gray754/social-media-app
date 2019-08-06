@@ -6,9 +6,11 @@ export default function Home() {
   return (
     <Container
       style={{
-        display: 'grid',
-        alignItems: 'center',
-        minHeight: '90vh'
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'stretch',
+        justifyContent: 'space-around',
+        minHeight: '50vh'
       }}
     >
       <Row style={{ textAlign: 'center' }}>
@@ -22,6 +24,11 @@ export default function Home() {
       <Link to='/signup'>
         <Button variant='primary' size='lg' block>
           Sign Up
+        </Button>
+      </Link>
+      <Link to='/login'>
+        <Button variant='secondary' size='lg' block>
+          Login as Existing User
         </Button>
       </Link>
     </Container>
