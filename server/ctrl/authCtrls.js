@@ -37,15 +37,18 @@ const register = async (req, res) => {
   }
 };
 
-const login = async (req, res) => {
+const login = (req, res) => {
   const db = req.app.get('db');
   db.user_details(req.body.username).then((result) => {
     // console.log(result[0]);
     if (!result.length) {
       res.status(401).json({ error: 'No User Found' });
     } else {
-      const isMatch = bcrypt.compare(req.body.password, result[0].password);
-      if (isMatch) {
+      const comparePassword = bcrypt.compare(
+        req.body.password,
+        result[0].password
+      );
+      if (comparePassword) {
         req.session.user = {
           id: result[0].id,
           username: result[0].username,

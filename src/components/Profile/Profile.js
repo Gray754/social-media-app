@@ -5,10 +5,12 @@ import {
   Image,
   Row,
   Col,
-  Spinner
+  Spinner,
+  Button
 } from 'react-bootstrap';
-import { getUserInfo } from '../../ducks/reducer';
+import { logoutUser } from '../../ducks/reducer';
 import { connect } from 'react-redux';
+import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 
 class Profile extends Component {
   constructor() {
@@ -16,38 +18,26 @@ class Profile extends Component {
     this.state = {};
   }
 
-  componentDidMount = () => {
-    this.props.getUserInfo();
+  logout = async () => {
+    await this.props.logoutUser();
+    this.props.history.push('/');
   };
 
   render() {
-    console.log(this.props.userInfo[0]);
-    if (this.props.userInfo[0]) {
-      var {
-        firstname,
-        lastname,
-        city,
-        state,
-        hobbies,
-        profilePic,
-        profileBanner
-      } = this.props.userInfo[0];
-    }
+    const {
+      fname,
+      lname,
+      city,
+      state,
+      hobbies,
+      profilePic,
+      profileBanner
+    } = this.props.userSession;
+
+    console.log(this.props.userSession);
 
     return this.props.isLoading ? (
-      <Container
-        style={{
-          minHeight: '100vh',
-          display: 'grid',
-          justifyContent: 'center',
-          alignItems: 'center'
-        }}
-      >
-        <Spinner
-          animation='border'
-          style={{ width: '100px', height: '100px' }}
-        />
-      </Container>
+      <LoadingSpinner />
     ) : (
       <Container>
         <div
@@ -66,6 +56,7 @@ class Profile extends Component {
             thumbnail
             width='50%'
             style={{ marginTop: '-5em' }}
+            onClick={() => this.changeProfileImg}
           />
         </div>
         <Row noGutter='true'>
@@ -77,16 +68,26 @@ class Profile extends Component {
               margintop: '10em'
             }}
           />
-          <Col style={{ textAlign: 'center' }}>
-            <h3>
-              {firstname} {lastname}
-            </h3>
-            <h5>
-              {city}, {state}
-            </h5>
-            <h5>About:</h5> <p>{hobbies}</p>
+          <Col>
+            <span style={{ textAlign: 'center' }}>
+              <h3>
+                {fname} {lname}
+              </h3>
+              <h5>
+                {city}, {state}
+              </h5>
+            </span>
+            <h5>Bio:</h5> <p>{hobbies}</p>
           </Col>
         </Row>
+        <Button
+          block
+          onClick={() => {
+            this.logout();
+          }}
+        >
+          Logout
+        </Button>
       </Container>
     );
   }
@@ -96,5 +97,5 @@ const mapStateToProps = (state) => state;
 
 export default connect(
   mapStateToProps,
-  { getUserInfo }
+  { logoutUser }
 )(Profile);

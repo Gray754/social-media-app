@@ -12,7 +12,8 @@ class SignUp extends Component {
       state: '',
       username: '',
       password: '',
-      email: ''
+      email: '',
+      toggleDetails: false
     };
   }
 
@@ -20,7 +21,7 @@ class SignUp extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  submitInfo = (e) => {
+  registerUser = (e) => {
     e.preventDefault();
     const { fname, lname, city, state, username, password, email } = this.state;
     axios
@@ -37,10 +38,40 @@ class SignUp extends Component {
       });
   };
 
+  nextPage = () => {
+    this.setState({ toggleDetails: !this.state.toggleDetails });
+  };
+
   render() {
-    console.log(this.state.lname);
     return (
       <Container>
+        <Form.Group>
+          <Form.Label>Username:</Form.Label>
+          <Form.Control
+            placeholder='Username'
+            name='username'
+            onChange={this.updateInput}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Password:</Form.Label>
+          <Form.Control
+            placeholder='Password'
+            name='password'
+            onChange={this.updateInput}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Email:</Form.Label>
+          <Form.Control
+            placeholder='dev@example.com'
+            name='email'
+            onChange={this.updateInput}
+          />
+        </Form.Group>
+        <Button block onClick={this.registerUser}>
+          Next
+        </Button>
         {/* <Form.Group>
           <Form.Label>First Name</Form.Label>
           <Form.Control
@@ -74,34 +105,10 @@ class SignUp extends Component {
               onChange={this.updateInput}
             />
           </Form.Group>
-        </Form.Row> */}
-        <Form.Group>
-          <Form.Label>Username:</Form.Label>
-          <Form.Control
-            placeholder='Username'
-            name='username'
-            onChange={this.updateInput}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Password:</Form.Label>
-          <Form.Control
-            placeholder='Password'
-            name='password'
-            onChange={this.updateInput}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Email:</Form.Label>
-          <Form.Control
-            placeholder='dev@example.com'
-            name='email'
-            onChange={this.updateInput}
-          />
-        </Form.Group>
+        </Form.Row>
         <Button block onClick={this.submitInfo}>
           Submit
-        </Button>
+        </Button> */}
       </Container>
     );
   }

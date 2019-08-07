@@ -1,11 +1,11 @@
 import React from 'react';
 import routes from './routes';
-import Nav from './components/Nav/Nav';
+import Header from './components/Navbar/Navbar';
 
 function App() {
   return (
     <div>
-      <Nav />
+      <Header />
       <div style={{ paddingTop: '4em' }}>{routes}</div>
     </div>
   );

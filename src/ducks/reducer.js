@@ -1,38 +1,56 @@
 import axios from 'axios';
 
 const initialState = {
-  userInfo: [],
+  userSession: {},
   isLoading: false,
-  isErr: false
+  loginErr: false
 };
 
-const GET_USER_INFO = 'GET_USER_INFO';
+const LOGIN_USER = 'LOGIN_USER';
+const LOGOUT = 'LOGOUT';
 
-export const getUserInfo = () => {
+export const loginUser = (username, password) => {
   return {
-    type: GET_USER_INFO,
-    payload: axios.get('/user/info')
+    type: LOGIN_USER,
+    payload: axios.post('/login', { username, password })
+  };
+};
+
+export const logoutUser = () => {
+  return {
+    type: LOGOUT,
+    payload: axios.get('/logout')
   };
 };
 
 export default function reducer(state = initialState, action) {
   switch (action.type) {
-    case `${GET_USER_INFO}_PENDING`:
+    case `${LOGIN_USER}_PENDING`:
       return {
         ...state,
         isLoading: true
       };
-    case `${GET_USER_INFO}_FULFILLED`:
+    case `${LOGIN_USER}_FULFILLED`:
       return {
         ...state,
         isLoading: false,
-        userInfo: action.payload.data
+        userSession: action.payload.data
       };
-    case `${GET_USER_INFO}_REJECTED`:
+    case `${LOGIN_USER}_REJECTED`:
       return {
         ...state,
         isLoading: false,
-        isErr: true
+        loginErr: true
+      };
+    case `${LOGOUT}_PENDING`:
+      return {
+        ...state,
+        isLoading: true
+      };
+    case `${LOGOUT}_FULFILLED`:
+      return {
+        ...state,
+        userSession: action.payload.data
       };
     default:
       return state;
