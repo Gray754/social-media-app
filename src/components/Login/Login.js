@@ -21,8 +21,10 @@ class Login extends Component {
   login = async (e) => {
     e.preventDefault();
     const { username, password } = this.state;
-    this.props.history.push('/profile');
-    await this.props.loginUser(username, password);
+    if (this.props.userSession.username) {
+      await this.props.history.push('/profile');
+    }
+    this.props.loginUser(username, password);
   };
 
   render() {
@@ -47,6 +49,14 @@ class Login extends Component {
           </Form.Group>
           <Button type='submit' block>
             Login
+          </Button>
+          <Button
+            block
+            onClick={() => {
+              this.props.history.push('/');
+            }}
+          >
+            Back
           </Button>
         </Form>
       </Container>

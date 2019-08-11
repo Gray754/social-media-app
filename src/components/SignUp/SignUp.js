@@ -69,6 +69,14 @@ class SignUp extends Component {
             onChange={this.updateInput}
           />
         </Form.Group>
+        <Button
+          block
+          onClick={() => {
+            this.props.history.push('/');
+          }}
+        >
+          Back
+        </Button>
         <Button block onClick={this.registerUser}>
           Next
         </Button>
