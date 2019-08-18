@@ -5,13 +5,22 @@ import { logoutUser } from '../../ducks/reducer';
 import { Navbar, NavDropdown, Nav } from 'react-bootstrap';
 
 class Header extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+    this.state = {};
   }
+
+  // logout = async () => {
+  //   this.props.logoutUser();
+  //   await this.props.history.push('/');
+  // };
+
   render() {
     return (
       <Navbar bg='light' expand='md' fixed='top'>
-        <Navbar.Brand href='#home'>DevConnect</Navbar.Brand>
+        <Link to='/'>
+          <Navbar.Brand>DevConnect</Navbar.Brand>
+        </Link>
         {this.props.userSession.username ? (
           <Navbar.Toggle aria-controls='navbarToggle' />
         ) : null}
@@ -22,7 +31,7 @@ class Header extends Component {
               <Link to='/profile'>Profile</Link>
             </Nav.Link>
             <Nav.Link>Settings</Nav.Link>
-            <Nav.Link onClick={() => this.logout()}>Logout</Nav.Link>
+            {/* <Nav.Link onClick={() => this.logout()}>Logout</Nav.Link> */}
           </Nav>
         </Navbar.Collapse>
       </Navbar>
@@ -32,4 +41,7 @@ class Header extends Component {
 
 const mapStateToProps = (state) => state;
 
-export default connect(mapStateToProps)(Header);
+export default connect(
+  mapStateToProps,
+  { logoutUser }
+)(Header);

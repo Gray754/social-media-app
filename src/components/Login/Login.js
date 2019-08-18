@@ -14,6 +14,12 @@ class Login extends Component {
     };
   }
 
+  componentDidMount() {
+    if (this.props.userSession.username) {
+      this.props.history.push('/login');
+    }
+  }
+
   updateInput = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
@@ -21,13 +27,12 @@ class Login extends Component {
   login = async (e) => {
     e.preventDefault();
     const { username, password } = this.state;
-    if (this.props.userSession.username) {
-      await this.props.history.push('/profile');
-    }
-    this.props.loginUser(username, password);
+    await this.props.loginUser(username, password);
+    this.props.history.push('/profile');
   };
 
   render() {
+    // console.log(this.state.username, this.state.password);
     return (
       <Container>
         <Form onSubmit={this.login}>
@@ -59,6 +64,11 @@ class Login extends Component {
             Back
           </Button>
         </Form>
+        {this.props.loginErr ? (
+          <p style={{ color: 'red', textAlign: 'center' }}>
+            Incorrect username/password
+          </p>
+        ) : null}
       </Container>
     );
   }

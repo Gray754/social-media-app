@@ -29,8 +29,9 @@ const register = async (req, res) => {
       email: req.body.email
     });
     req.session.user = { username: response[0].username, id: response[0] };
-    transporter.sendMail(mailOptions);
     res.send(req.session.user);
+    transporter.sendMail(mailOptions);
+    console.log(req.session.user);
   } catch (err) {
     console.log(err);
     res.status(401).send('There is an error.');
@@ -39,8 +40,8 @@ const register = async (req, res) => {
 
 const login = (req, res) => {
   const db = req.app.get('db');
-  db.user_details(req.body.username).then((result) => {
-    // console.log(result[0]);
+  db.find_user(req.body.username).then((result) => {
+    console.log(result[0]);
     if (!result.length) {
       res.status(401).json({ error: 'No User Found' });
     } else {
@@ -49,20 +50,23 @@ const login = (req, res) => {
         result[0].password
       );
       if (comparePassword) {
-        req.session.user = {
-          id: result[0].id,
-          username: result[0].username,
-          email: result[0].email,
-          fname: result[0].firstname,
-          lname: result[0].lastname,
-          city: result[0].city,
-          state: result[0].state,
-          hobbies: result[0].hobbies,
-          profilePic: result[0].profilePic,
-          profileBanner: result[0].profileBanner
-        };
-        res.json(req.session.user);
-        console.log(req.session.user);
+        db.user_details(req.body.username).then((result) => {
+          // console.log(result[0]);
+          req.session.user = {
+            id: result[0].id,
+            username: result[0].username,
+            email: result[0].email,
+            fname: result[0].firstname,
+            lname: result[0].lastname,
+            city: result[0].city,
+            state: result[0].state,
+            hobbies: result[0].hobbies,
+            profilePic: result[0].profilePic,
+            profileBanner: result[0].profileBanner
+          };
+          res.json(req.session.user);
+        });
+        // console.log(req.session.user);
       } else {
         res.status(401).send({ error: 'Incorrect Password' });
       }

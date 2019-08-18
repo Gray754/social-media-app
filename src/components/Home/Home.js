@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
-export default function Home() {
+export default function Home(props) {
   return (
     <Container
       style={{

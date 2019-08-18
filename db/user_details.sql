@@ -1,4 +1,4 @@
 SELECT * 
-FROM user_info ui
-JOIN users u ON ui.user_info_id=u.id
+FROM users u
+JOIN user_info ui ON ui.user_id=u.id
 WHERE username = $1

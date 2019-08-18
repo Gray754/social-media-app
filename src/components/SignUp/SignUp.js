@@ -31,7 +31,7 @@ class SignUp extends Component {
         email
       })
       .then((response) => {
-        this.props.history.push('/');
+        this.props.history.push('/profile');
       })
       .catch((err) => {
         console.log(err);
@@ -43,6 +43,7 @@ class SignUp extends Component {
   };
 
   render() {
+    console.log(this.props.userSession);
     return (
       <Container>
         <Form.Group>
